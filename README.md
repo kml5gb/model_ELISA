@@ -13,9 +13,13 @@ The user inputs initial concentrations, kinetic constants, and overall reaction 
 pip install model_ELISA
 
 ## Load GUI
+<img width="454" alt="Screenshot 2024-12-05 at 7 59 24 PM" src="https://github.com/user-attachments/assets/41a1cc17-b765-42be-8898-76ed753cea18">
 
 ## Choose input parameters or select default parameters
+<img width="455" alt="Screenshot 2024-12-05 at 7 59 52 PM" src="https://github.com/user-attachments/assets/b30bfb84-042c-4abf-b591-18429f263178">
 
 ## Run simulation
+<img width="1100" alt="Screenshot 2024-12-05 at 8 00 29 PM" src="https://github.com/user-attachments/assets/07fe5d32-7e21-4094-90d5-efbe52d03ee1">
 
 ## Optional: Clear plot and input parameters, enter new parameters and re-run simulation
+<img width="1097" alt="Screenshot 2024-12-05 at 8 00 50 PM" src="https://github.com/user-attachments/assets/b076f628-17d8-43a9-b70b-508835b2b9fd">
