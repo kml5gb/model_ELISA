@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import tellurium as te
 
-def run_simulation(capture_entry, antigen_entry, detection_entry, substrate_entry,
-    k_on1_entry, k_off1_entry, k_on2_entry, k_off2_entry,
-    k_cat1_entry, k_cat2_entry, overall_time_entry, plot_frame
-):
+def run_simulation(capture_entry:float, antigen_entry:float, detection_entry:float, substrate_entry:float,
+    k_on1_entry:float, k_off1_entry:float, k_on2_entry:float, k_off2_entry:float,
+    k_cat1_entry:float, k_cat2_entry:float, overall_time_entry:float, plot_frame:float
+) -> plt:
 
     '''
     Run the simulation and plot the results.
@@ -112,7 +112,7 @@ def run_simulation(capture_entry, antigen_entry, detection_entry, substrate_entr
     canvas.draw()
     canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
-def insert_default_parameters(entries):
+def insert_default_parameters(entries:dict) -> None:
     '''
     This function inserts default parameters into the input fields
     if the user does not know which values to start with. values are:
@@ -136,7 +136,7 @@ def insert_default_parameters(entries):
         entry.delete(0, tk.END)
         entry.insert(0, value)
 
-def clear_plot_and_inputs(entries, plot_frame):
+def clear_plot_and_inputs(entries:dict, plot_frame:float) -> None:
     """
     This function clears the plot and input fields if the user 
     wants to start over and tests new values.
