@@ -6,6 +6,11 @@ import model_ELISA_gui  # This imports the module where FigureCanvasTkAgg is use
 
 class TestElisaSimulation(unittest.TestCase):
     def setUp(self):
+        '''
+        This test case mocks the Tkinter widgets and FigureCanvasTkAgg to avoid
+        any interactions with the GUI. This will allow us to simulate the user 
+        interactions without opeming the GUI.
+        '''
         # Mock entry widgets
         self.mock_entries = {key: MagicMock() for key in [
             "capture_entry", "antigen_entry", "detection_entry",
@@ -29,18 +34,30 @@ class TestElisaSimulation(unittest.TestCase):
         del model_ELISA_gui.FigureCanvasTkAgg
 
     def test_insert_default_parameters(self):
+        '''
+        This test checks if the function correctly inserts default parameters into the input fields.
+        Mock input fields are used, the function is called, and the test checks if the insert method is called.
+        '''
         insert_default_parameters(self.mock_entries)
         for key, mock_entry in self.mock_entries.items():
             mock_entry.delete.assert_called_with(0, tk.END)
             mock_entry.insert.assert_called_once()
 
     def test_clear_plot_and_inputs(self):
+        '''
+        This test checks if the function correctly clears the plot and input fields.
+        The mock input field is set up, the function is called, and the test checks if the delete method is called.
+        '''
         clear_plot_and_inputs(self.mock_entries, self.mock_plot_frame)
         self.mock_plot_frame.winfo_children.assert_called()
         for mock_entry in self.mock_entries.values():
             mock_entry.delete.assert_called_with(0, tk.END)
 
     def test_run_simulation(self):
+        '''
+        This test checks if the simulation runs correctly with the mocked input fields.
+        The function is called with the mocked input fields and plot frame, and the test checks if the canvas 
+        creation method is called.'''
         for key, mock_entry in self.mock_entries.items():
             mock_entry.get.return_value = "10"  # Mock valid inputs
 
