@@ -5,7 +5,10 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import tellurium as te
 
-def run_simulation():
+def run_simulation(capture_entry, antigen_entry, detection_entry, substrate_entry,
+    k_on1_entry, k_off1_entry, k_on2_entry, k_off2_entry,
+    k_cat1_entry, k_cat2_entry, overall_time_entry, plot_frame
+):
 
     '''
     Run the simulation and plot the results.
@@ -109,7 +112,7 @@ def run_simulation():
     canvas.draw()
     canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
-def insert_default_parameters():
+def insert_default_parameters(entries):
     '''
     This function inserts default parameters into the input fields
     if the user does not know which values to start with. values are:
@@ -129,21 +132,19 @@ def insert_default_parameters():
         "overall_time_entry": 200
     }
     for key, value in default_values.items():
-        globals()[key].delete(0, tk.END)
-        globals()[key].insert(0, value)
+        entry = entries[key]
+        entry.delete(0, tk.END)
+        entry.insert(0, value)
 
-def clear_plot_and_inputs():
+def clear_plot_and_inputs(entries, plot_frame):
     """
     This function clears the plot and input fields if the user 
     wants to start over and tests new values.
     """
-    global canvas  # Declare canvas as global to access it here
     for widget in plot_frame.winfo_children():
         widget.destroy()
-    # Clear input fields
-    for key in globals():
-        if key.endswith('_entry'):
-            globals()[key].delete(0, tk.END)
+    for entry in entries.values():
+        entry.delete(0, tk.END)
 
 #Creating the GUI
 
@@ -178,6 +179,7 @@ fields = [
     ("Overall reaction time (s)", "overall_time_entry")
 ]
 
+entries = {}    # Dictionary to store entry widgets
 for label_text, var_name in fields:
     frame = ttk.Frame(input_frame, padding="3 3 12 12")
     frame.pack(side=tk.TOP, fill=tk.X)
@@ -185,18 +187,23 @@ for label_text, var_name in fields:
     label.pack(side=tk.LEFT)
     entry = ttk.Entry(frame)
     entry.pack(side=tk.RIGHT, fill=tk.X, expand=True)
-    globals()[var_name] = entry
+    entries[var_name] = entry
 
 # Add a button to insert default parameters
-default_button = ttk.Button(input_frame, text="Insert Default Parameters", command=insert_default_parameters)
+default_button = ttk.Button(input_frame, text="Insert Default Parameters", command=lambda: insert_default_parameters(entries))
 default_button.pack(side=tk.TOP, pady=10)
 
 # Add a button to run the simulation
-run_button = ttk.Button(input_frame, text="Run Simulation", command=run_simulation)
+run_button = ttk.Button(input_frame, text="Run Simulation", command=lambda: run_simulation(
+    entries["capture_entry"], entries["antigen_entry"], entries["detection_entry"],
+    entries["substrate_entry"], entries["k_on1_entry"], entries["k_off1_entry"],
+    entries["k_on2_entry"], entries["k_off2_entry"], entries["k_cat1_entry"],
+    entries["k_cat2_entry"], entries["overall_time_entry"], plot_frame
+))
 run_button.pack(side=tk.TOP, pady=10)
 
 #Add a button which clears the plot and the input fields
-clear_button = ttk.Button(input_frame, text="Clear", command=clear_plot_and_inputs)
+clear_button = ttk.Button(input_frame, text="Clear", command=lambda: clear_plot_and_inputs(entries, plot_frame))
 clear_button.pack(side=tk.TOP, pady=10)
 
 # Create a frame for the plot
