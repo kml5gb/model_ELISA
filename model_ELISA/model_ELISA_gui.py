@@ -5,6 +5,30 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import tellurium as te
 
+'''This program simulates the direct ELISA model via GUI with input parameters
+
+    # General concentration input format
+    capture =  Initial capture antibody concentration (M)
+    antigen =  Initial antigen concentration (M)
+    capture_antigen =  Capture antibody-antigen complex (M)
+    detection = Initial detection antibody concentration (M)
+    capture_antigen_detection = Capture antibody-antigen-detection antibody complex (M)
+    substrate = Substrate concentration (M)
+    product =  Product concentration (M)
+
+    # General kinetic constant input format
+    k_on1 =  Forward rate constant for capture antibody and antigen (s^-1)
+    k_off1 = Reverse rate constant for capture antibody and antigen (s^-1)
+    k_on2 = Forward rate constant for detection antibody and antigen (s^-1)
+    k_off2 = Reverse rate constant for detection antibody and antigen (s^-1)
+    k_cat1 = Catalytic rate constant for substrate conversion (s^-1)
+    k_cat2 = Rate constant for substrate conversion (s^-1)
+
+    If there is an enry after the variable name it refers to the GUI grabbing the 
+    value from the user inputs. Default values are specified below if the user
+    chooses to use them, however the input field are left blank at the beginning
+    to allow the user to input their own values.'''    
+
 def run_simulation(capture_entry:float, antigen_entry:float, detection_entry:float, substrate_entry:float,
     k_on1_entry:float, k_off1_entry:float, k_on2_entry:float, k_off2_entry:float,
     k_cat1_entry:float, k_cat2_entry:float, overall_time_entry:float, plot_frame:float
@@ -16,6 +40,20 @@ def run_simulation(capture_entry:float, antigen_entry:float, detection_entry:flo
     This function reads the input values from the GUI, simulates the direct ELISA model,
     and plots the results. The steady state is determined by comparing the change in
     concentration between time points. The steady state time is marked on the plot.
+
+    Parameters:
+    capture_entry: Entry widget for the capture antibody concentration
+    antigen_entry: Entry widget for the antigen concentration
+    detection_entry: Entry widget for the detection antibody concentration
+    substrate_entry: Entry widget for the substrate concentration
+    k_on1_entry: Entry widget for the forward rate constant for capture antibody and antigen
+    k_off1_entry: Entry widget for the reverse rate constant for capture antibody and antigen
+    k_on2_entry: Entry widget for the forward rate constant for detection antibody and antigen
+    k_off2_entry: Entry widget for the reverse rate constant for detection antibody and antigen
+    k_cat1_entry: Entry widget for the catalytic rate constant for substrate conversion
+    k_cat2_entry: Entry widget for the rate constant for substrate conversion
+    overall_time_entry: Entry widget for the overall reaction time
+    plot_frame: Frame to display the plot
     
     '''
 
@@ -117,6 +155,10 @@ def insert_default_parameters(entries:dict) -> None:
     This function inserts default parameters into the input fields
     if the user does not know which values to start with. values are:
     for all the entry fields denoted in the antimony model above.
+
+    Parameters:
+    entries: Dictionary of entry widgets
+
     '''
     default_values = {
         "capture_entry": 10,
@@ -140,6 +182,10 @@ def clear_plot_and_inputs(entries:dict, plot_frame:float) -> None:
     """
     This function clears the plot and input fields if the user 
     wants to start over and tests new values.
+
+    Parameters:
+    entries: Dictionary of entry widgets
+    plot_frame: Frame to display the plot
     """
     for widget in plot_frame.winfo_children():
         widget.destroy()
